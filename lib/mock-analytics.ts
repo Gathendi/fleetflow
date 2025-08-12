@@ -1,0 +1,205 @@
+import type {
+  RevenueData,
+  FleetUtilization,
+  LocationPerformance,
+  CustomerSegment,
+  BookingTrends,
+  VehicleCategoryPerformance,
+  KPIMetrics,
+} from "@/types/analytics"
+
+export const mockRevenueData: RevenueData[] = [
+  { date: "2024-01", revenue: 45230, bookings: 156, avgBookingValue: 290 },
+  { date: "2024-02", revenue: 52100, bookings: 178, avgBookingValue: 293 },
+  { date: "2024-03", revenue: 48750, bookings: 165, avgBookingValue: 295 },
+  { date: "2024-04", revenue: 56800, bookings: 192, avgBookingValue: 296 },
+  { date: "2024-05", revenue: 61200, bookings: 205, avgBookingValue: 299 },
+  { date: "2024-06", revenue: 68500, bookings: 228, avgBookingValue: 300 },
+  { date: "2024-07", revenue: 72300, bookings: 240, avgBookingValue: 301 },
+  { date: "2024-08", revenue: 69800, bookings: 231, avgBookingValue: 302 },
+  { date: "2024-09", revenue: 65400, bookings: 216, avgBookingValue: 303 },
+  { date: "2024-10", revenue: 71200, bookings: 234, avgBookingValue: 304 },
+  { date: "2024-11", revenue: 74500, bookings: 244, avgBookingValue: 305 },
+  { date: "2024-12", revenue: 78900, bookings: 258, avgBookingValue: 306 },
+]
+
+export const mockFleetUtilization: FleetUtilization[] = [
+  {
+    vehicleId: "1",
+    vehicleName: "2023 Toyota Camry",
+    category: "sedan",
+    utilizationRate: 78,
+    totalBookings: 45,
+    revenue: 12500,
+    daysRented: 285,
+    totalDays: 365,
+  },
+  {
+    vehicleId: "2",
+    vehicleName: "2022 Honda CR-V",
+    category: "suv",
+    utilizationRate: 85,
+    totalBookings: 67,
+    revenue: 18900,
+    daysRented: 310,
+    totalDays: 365,
+  },
+  {
+    vehicleId: "3",
+    vehicleName: "2023 BMW X5",
+    category: "luxury",
+    utilizationRate: 65,
+    totalBookings: 23,
+    revenue: 8900,
+    daysRented: 237,
+    totalDays: 365,
+  },
+  {
+    vehicleId: "4",
+    vehicleName: "2023 Tesla Model 3",
+    category: "electric",
+    utilizationRate: 72,
+    totalBookings: 34,
+    revenue: 11200,
+    daysRented: 263,
+    totalDays: 365,
+  },
+]
+
+export const mockLocationPerformance: LocationPerformance[] = [
+  {
+    locationId: "1",
+    locationName: "Downtown Branch",
+    totalBookings: 145,
+    revenue: 42300,
+    vehicleCount: 45,
+    utilizationRate: 76,
+    avgBookingValue: 292,
+  },
+  {
+    locationId: "2",
+    locationName: "Airport Location",
+    totalBookings: 198,
+    revenue: 58700,
+    vehicleCount: 78,
+    utilizationRate: 82,
+    avgBookingValue: 297,
+  },
+  {
+    locationId: "3",
+    locationName: "Service Center",
+    totalBookings: 12,
+    revenue: 3200,
+    vehicleCount: 12,
+    utilizationRate: 45,
+    avgBookingValue: 267,
+  },
+]
+
+export const mockCustomerSegments: CustomerSegment[] = [
+  {
+    segment: "Business Travelers",
+    count: 156,
+    revenue: 45600,
+    avgBookingValue: 292,
+    bookingFrequency: 4.2,
+  },
+  {
+    segment: "Leisure Travelers",
+    count: 234,
+    revenue: 38900,
+    avgBookingValue: 166,
+    bookingFrequency: 2.1,
+  },
+  {
+    segment: "Local Residents",
+    count: 89,
+    revenue: 12300,
+    avgBookingValue: 138,
+    bookingFrequency: 1.8,
+  },
+  {
+    segment: "Corporate Accounts",
+    count: 45,
+    revenue: 67800,
+    avgBookingValue: 1507,
+    bookingFrequency: 8.7,
+  },
+]
+
+export const mockBookingTrends: BookingTrends[] = [
+  { date: "2024-01", totalBookings: 156, confirmedBookings: 142, cancelledBookings: 8, pendingBookings: 6 },
+  { date: "2024-02", totalBookings: 178, confirmedBookings: 165, cancelledBookings: 7, pendingBookings: 6 },
+  { date: "2024-03", totalBookings: 165, confirmedBookings: 152, cancelledBookings: 9, pendingBookings: 4 },
+  { date: "2024-04", totalBookings: 192, confirmedBookings: 178, cancelledBookings: 8, pendingBookings: 6 },
+  { date: "2024-05", totalBookings: 205, confirmedBookings: 189, cancelledBookings: 10, pendingBookings: 6 },
+  { date: "2024-06", totalBookings: 228, confirmedBookings: 212, cancelledBookings: 9, pendingBookings: 7 },
+  { date: "2024-07", totalBookings: 240, confirmedBookings: 223, cancelledBookings: 11, pendingBookings: 6 },
+  { date: "2024-08", totalBookings: 231, confirmedBookings: 214, cancelledBookings: 10, pendingBookings: 7 },
+  { date: "2024-09", totalBookings: 216, confirmedBookings: 200, cancelledBookings: 9, pendingBookings: 7 },
+  { date: "2024-10", totalBookings: 234, confirmedBookings: 217, cancelledBookings: 10, pendingBookings: 7 },
+  { date: "2024-11", totalBookings: 244, confirmedBookings: 226, cancelledBookings: 11, pendingBookings: 7 },
+  { date: "2024-12", totalBookings: 258, confirmedBookings: 239, cancelledBookings: 12, pendingBookings: 7 },
+]
+
+export const mockVehicleCategoryPerformance: VehicleCategoryPerformance[] = [
+  {
+    category: "sedan",
+    count: 45,
+    revenue: 125600,
+    bookings: 234,
+    utilizationRate: 78,
+    avgDailyRate: 48,
+  },
+  {
+    category: "suv",
+    count: 32,
+    revenue: 156700,
+    bookings: 189,
+    utilizationRate: 82,
+    avgDailyRate: 67,
+  },
+  {
+    category: "luxury",
+    count: 18,
+    revenue: 234500,
+    bookings: 98,
+    utilizationRate: 65,
+    avgDailyRate: 125,
+  },
+  {
+    category: "electric",
+    count: 12,
+    revenue: 89400,
+    bookings: 67,
+    utilizationRate: 72,
+    avgDailyRate: 89,
+  },
+  {
+    category: "compact",
+    count: 28,
+    revenue: 78900,
+    bookings: 156,
+    utilizationRate: 75,
+    avgDailyRate: 42,
+  },
+  {
+    category: "van",
+    count: 8,
+    revenue: 45600,
+    bookings: 34,
+    utilizationRate: 68,
+    avgDailyRate: 95,
+  },
+]
+
+export const mockKPIMetrics: KPIMetrics = {
+  totalRevenue: 724680,
+  totalBookings: 2587,
+  avgBookingValue: 280,
+  fleetUtilization: 76,
+  customerSatisfaction: 4.7,
+  repeatCustomerRate: 68,
+  revenueGrowth: 23.5,
+  bookingGrowth: 18.2,
+}

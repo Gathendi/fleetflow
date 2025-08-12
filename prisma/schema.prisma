@@ -1,0 +1,470 @@
+// FleetFlow Prisma Schema
+// Comprehensive car rental management platform database schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums for type safety
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  FLEET_MANAGER
+  STAFF
+  CUSTOMER
+
+  @@map("user_role")
+}
+
+enum VehicleCategory {
+  ECONOMY
+  COMPACT
+  SEDAN
+  SUV
+  LUXURY
+  ELECTRIC
+  VAN
+
+  @@map("vehicle_category")
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  RENTED
+  MAINTENANCE
+  OUT_OF_SERVICE
+
+  @@map("vehicle_status")
+}
+
+enum FuelType {
+  GASOLINE
+  DIESEL
+  ELECTRIC
+  HYBRID
+
+  @@map("fuel_type")
+}
+
+enum TransmissionType {
+  AUTOMATIC
+  MANUAL
+
+  @@map("transmission_type")
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+
+  @@map("booking_status")
+}
+
+enum BookingType {
+  DAILY
+  WEEKLY
+  MONTHLY
+
+  @@map("booking_type")
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+
+  @@map("payment_status")
+}
+
+enum PaymentMethodType {
+  CREDIT_CARD
+  DEBIT_CARD
+  PAYPAL
+  APPLE_PAY
+  GOOGLE_PAY
+
+  @@map("payment_method_type")
+}
+
+enum ServiceUnit {
+  PER_DAY
+  PER_BOOKING
+  PER_HOUR
+
+  @@map("service_unit")
+}
+
+enum MaintenanceType {
+  ROUTINE
+  REPAIR
+  INSPECTION
+  CLEANING
+
+  @@map("maintenance_type")
+}
+
+enum MaintenanceStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+
+  @@map("maintenance_status")
+}
+
+// Core Models
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String    @map("password_hash")
+  name          String
+  role          UserRole
+  avatar        String?
+  phone         String?
+  isActive      Boolean   @default(true) @map("is_active")
+  emailVerified Boolean   @default(false) @map("email_verified")
+  lastLogin     DateTime? @map("last_login")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  // Relationships
+  bookings       Booking[]
+  payments       Payment[]
+  paymentMethods PaymentMethod[]
+  notifications  Notification[]
+  auditLogs      AuditLog[]
+  sessions       Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  sessionToken String   @unique @map("session_token")
+  refreshToken String?  @map("refresh_token")
+  expiresAt    DateTime @map("expires_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Location {
+  id             String   @id @default(cuid())
+  name           String
+  address        String
+  city           String
+  state          String
+  zipCode        String   @map("zip_code")
+  phone          String
+  email          String
+  isActive       Boolean  @default(true) @map("is_active")
+  latitude       Float?
+  longitude      Float?
+  operatingHours Json?    @map("operating_hours")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  vehicles        Vehicle[]
+  pickupBookings  Booking[] @relation("PickupLocation")
+  dropoffBookings Booking[] @relation("DropoffLocation")
+
+  @@map("locations")
+}
+
+model Vehicle {
+  id                   String            @id @default(cuid())
+  make                 String
+  model                String
+  year                 Int
+  licensePlate         String            @unique @map("license_plate")
+  vin                  String            @unique
+  category             VehicleCategory
+  status               VehicleStatus     @default(AVAILABLE)
+  locationId           String            @map("location_id")
+  pricePerDay          Decimal           @map("price_per_day") @db.Decimal(10, 2)
+  pricePerWeek         Decimal           @map("price_per_week") @db.Decimal(10, 2)
+  pricePerMonth        Decimal           @map("price_per_month") @db.Decimal(10, 2)
+  fuelType             FuelType          @map("fuel_type")
+  transmission         TransmissionType
+  seats                Int
+  doors                Int
+  fuelCapacity         Float             @map("fuel_capacity")
+  currentFuelLevel     Float             @default(100) @map("current_fuel_level")
+  mileage              Int               @default(0)
+  features             String[]
+  color                String
+  condition            String?
+  lastMaintenanceDate  DateTime?         @map("last_maintenance_date")
+  nextMaintenanceDate  DateTime?         @map("next_maintenance_date")
+  maintenanceMiles     Int?              @map("maintenance_miles")
+  totalBookings        Int               @default(0) @map("total_bookings")
+  totalRevenue         Decimal           @default(0) @map("total_revenue") @db.Decimal(12, 2)
+  createdAt            DateTime          @default(now()) @map("created_at")
+  updatedAt            DateTime          @updatedAt @map("updated_at")
+
+  // Relationships
+  location           Location            @relation(fields: [locationId], references: [id])
+  bookings           Booking[]
+  images             VehicleImage[]
+  maintenanceRecords MaintenanceRecord[]
+
+  @@map("vehicles")
+}
+
+model VehicleImage {
+  id        String   @id @default(cuid())
+  vehicleId String   @map("vehicle_id")
+  url       String
+  isPrimary Boolean  @default(false) @map("is_primary")
+  alt       String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relationships
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("vehicle_images")
+}
+
+model Booking {
+  id                  String        @id @default(cuid())
+  confirmationNumber  String        @unique @map("confirmation_number")
+  customerId          String        @map("customer_id")
+  vehicleId           String        @map("vehicle_id")
+  startDate           DateTime      @map("start_date")
+  endDate             DateTime      @map("end_date")
+  pickupLocationId    String        @map("pickup_location_id")
+  dropoffLocationId   String        @map("dropoff_location_id")
+  basePrice           Decimal       @map("base_price") @db.Decimal(10, 2)
+  servicesPrice       Decimal       @default(0) @map("services_price") @db.Decimal(10, 2)
+  taxes               Decimal       @db.Decimal(10, 2)
+  fees                Decimal       @db.Decimal(10, 2)
+  totalPrice          Decimal       @map("total_price") @db.Decimal(10, 2)
+  bookingType         BookingType   @map("booking_type")
+  status              BookingStatus @default(PENDING)
+  customerPhone       String        @map("customer_phone")
+  specialRequests     String?       @map("special_requests")
+  checkedInAt         DateTime?     @map("checked_in_at")
+  checkedOutAt        DateTime?     @map("checked_out_at")
+  checkedInBy         String?       @map("checked_in_by")
+  checkedOutBy        String?       @map("checked_out_by")
+  pickupCondition     String?       @map("pickup_condition")
+  returnCondition     String?       @map("return_condition")
+  damageReported      Boolean       @default(false) @map("damage_reported")
+  damageDescription   String?       @map("damage_description")
+  damagePhotos        String[]      @map("damage_photos")
+  createdAt           DateTime      @default(now()) @map("created_at")
+  updatedAt           DateTime      @updatedAt @map("updated_at")
+
+  // Relationships
+  customer        User             @relation(fields: [customerId], references: [id])
+  vehicle         Vehicle          @relation(fields: [vehicleId], references: [id])
+  pickupLocation  Location         @relation("PickupLocation", fields: [pickupLocationId], references: [id])
+  dropoffLocation Location         @relation("DropoffLocation", fields: [dropoffLocationId], references: [id])
+  services        BookingService[]
+  payments        Payment[]
+  invoices        Invoice[]
+
+  @@map("bookings")
+}
+
+model Service {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  price       Decimal     @db.Decimal(8, 2)
+  unit        ServiceUnit
+  isActive    Boolean     @default(true) @map("is_active")
+  category    String?
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  // Relationships
+  bookingServices BookingService[]
+
+  @@map("services")
+}
+
+model BookingService {
+  id        String  @id @default(cuid())
+  bookingId String  @map("booking_id")
+  serviceId String  @map("service_id")
+  quantity  Int     @default(1)
+  price     Decimal @db.Decimal(8, 2)
+
+  // Relationships
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@unique([bookingId, serviceId])
+  @@map("booking_services")
+}
+
+model PaymentMethod {
+  id          String            @id @default(cuid())
+  customerId  String            @map("customer_id")
+  type        PaymentMethodType
+  name        String
+  last4       String?
+  expiryMonth Int?              @map("expiry_month")
+  expiryYear  Int?              @map("expiry_year")
+  brand       String?
+  isDefault   Boolean           @default(false) @map("is_default")
+  isActive    Boolean           @default(true) @map("is_active")
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+
+  // Relationships
+  customer User      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  payments Payment[]
+
+  @@map("payment_methods")
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  bookingId       String        @map("booking_id")
+  customerId      String        @map("customer_id")
+  amount          Decimal       @db.Decimal(10, 2)
+  currency        String        @default("USD")
+  status          PaymentStatus @default(PENDING)
+  paymentMethodId String?       @map("payment_method_id")
+  transactionId   String?       @unique @map("transaction_id")
+  description     String
+  metadata        Json?
+  failureReason   String?       @map("failure_reason")
+  retryCount      Int           @default(0) @map("retry_count")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+  completedAt     DateTime?     @map("completed_at")
+
+  // Relationships
+  booking       Booking        @relation(fields: [bookingId], references: [id])
+  customer      User           @relation(fields: [customerId], references: [id])
+  paymentMethod PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  refunds       Refund[]
+
+  @@map("payments")
+}
+
+model Refund {
+  id          String   @id @default(cuid())
+  paymentId   String   @map("payment_id")
+  amount      Decimal  @db.Decimal(10, 2)
+  reason      String
+  status      String
+  processedBy String   @map("processed_by")
+  createdAt   DateTime @default(now()) @map("created_at")
+  completedAt DateTime? @map("completed_at")
+
+  // Relationships
+  payment Payment @relation(fields: [paymentId], references: [id])
+
+  @@map("refunds")
+}
+
+model Invoice {
+  id        String        @id @default(cuid())
+  bookingId String        @map("booking_id")
+  customerId String       @map("customer_id")
+  amount    Decimal       @db.Decimal(10, 2)
+  tax       Decimal       @db.Decimal(10, 2)
+  total     Decimal       @db.Decimal(10, 2)
+  currency  String        @default("USD")
+  status    String
+  dueDate   DateTime      @map("due_date")
+  paidAt    DateTime?     @map("paid_at")
+  items     InvoiceItem[]
+  createdAt DateTime      @default(now()) @map("created_at")
+
+  // Relationships
+  booking Booking @relation(fields: [bookingId], references: [id])
+
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id          String  @id @default(cuid())
+  invoiceId   String  @map("invoice_id")
+  description String
+  quantity    Int
+  unitPrice   Decimal @map("unit_price") @db.Decimal(8, 2)
+  total       Decimal @db.Decimal(8, 2)
+
+  // Relationships
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("invoice_items")
+}
+
+model MaintenanceRecord {
+  id           String            @id @default(cuid())
+  vehicleId    String            @map("vehicle_id")
+  type         MaintenanceType
+  description  String
+  cost         Decimal           @db.Decimal(10, 2)
+  performedBy  String            @map("performed_by")
+  performedAt  DateTime          @map("performed_at")
+  nextDueDate  DateTime?         @map("next_due_date")
+  nextDueMiles Int?              @map("next_due_miles")
+  status       MaintenanceStatus @default(SCHEDULED)
+  notes        String?
+  createdAt    DateTime          @default(now()) @map("created_at")
+
+  // Relationships
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
+
+  @@map("maintenance_records")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  title     String
+  message   String
+  type      String
+  isRead    Boolean  @default(false) @map("is_read")
+  metadata  Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?  @map("user_id")
+  action    String
+  resource  String
+  resourceId String? @map("resource_id")
+  oldValues Json?    @map("old_values")
+  newValues Json?    @map("new_values")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relationships
+  user User? @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+}

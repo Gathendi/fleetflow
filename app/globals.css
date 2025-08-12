@@ -1,0 +1,335 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import '@fontsource/jost/400.css'; /* Regular */
+@import '@fontsource/jost/500.css'; /* Medium */
+@import '@fontsource/jost/600.css'; /* SemiBold */
+@import '@fontsource/jost/700.css'; /* Bold */
+@import '@fontsource/jost/300.css'; /* Light */
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* FleetFlow Brand Colors */
+  --brand-crimson: #A4193D;
+  --brand-peach: #FFDFB9;
+  --brand-crimson-50: #fef2f3;
+  --brand-crimson-100: #fde6e8;
+  --brand-crimson-200: #fbd0d6;
+  --brand-crimson-300: #f7aab6;
+  --brand-crimson-400: #f17892;
+  --brand-crimson-500: #e84d70;
+  --brand-crimson-600: #d73161;
+  --brand-crimson-700: #b52751;
+  --brand-crimson-800: #A4193D;
+  --brand-crimson-900: #7a1a32;
+  --brand-crimson-950: #440b18;
+  
+  --brand-peach-50: #fffefb;
+  --brand-peach-100: #fffcf5;
+  --brand-peach-200: #fff7e6;
+  --brand-peach-300: #FFDFB9;
+  --brand-peach-400: #ffc97a;
+  --brand-peach-500: #ffb347;
+  --brand-peach-600: #ff9a1f;
+  --brand-peach-700: #e67e00;
+  --brand-peach-800: #cc6600;
+  --brand-peach-900: #b35500;
+  --brand-peach-950: #7a3a00;
+
+  /* Base Colors */
+  --background: 255 255 255; /* White */
+  --foreground: 23 23 23; /* Almost black */
+  --card: 255 255 255;
+  --card-foreground: 23 23 23;
+  --popover: 255 255 255;
+  --popover-foreground: 23 23 23;
+  
+  /* Primary - Crimson Red */
+  --primary: 164 25 61; /* #A4193D */
+  --primary-foreground: 255 255 255;
+  
+  /* Secondary - Peach */
+  --secondary: 255 223 185; /* #FFDFB9 */
+  --secondary-foreground: 164 25 61;
+  
+  /* Muted */
+  --muted: 250 250 250;
+  --muted-foreground: 115 115 115;
+  
+  /* Accent */
+  --accent: 255 247 230; /* Light peach */
+  --accent-foreground: 164 25 61;
+  
+  /* Destructive */
+  --destructive: 239 68 68;
+  --destructive-foreground: 255 255 255;
+  
+  /* Borders */
+  --border: 229 229 229;
+  --input: 229 229 229;
+  --ring: 164 25 61; /* Crimson focus ring */
+  
+  /* Chart Colors */
+  --chart-1: 164 25 61; /* Crimson */
+  --chart-2: 255 223 185; /* Peach */
+  --chart-3: 34 197 94; /* Green */
+  --chart-4: 59 130 246; /* Blue */
+  --chart-5: 168 85 247; /* Purple */
+  
+  /* Border Radius */
+  --radius: 0.75rem;
+  
+  /* Sidebar */
+  --sidebar: 255 255 255;
+  --sidebar-foreground: 23 23 23;
+  --sidebar-primary: 164 25 61;
+  --sidebar-primary-foreground: 255 255 255;
+  --sidebar-accent: 255 247 230;
+  --sidebar-accent-foreground: 164 25 61;
+  --sidebar-border: 229 229 229;
+  --sidebar-ring: 164 25 61;
+}
+
+.dark {
+  /* Base Colors */
+  --background: 15 15 15; /* Dark background */
+  --foreground: 250 250 250; /* Light text */
+  --card: 24 24 27; /* Dark card */
+  --card-foreground: 250 250 250;
+  --popover: 24 24 27;
+  --popover-foreground: 250 250 250;
+  
+  /* Primary - Lighter Crimson for dark mode */
+  --primary: 241 120 146; /* Lighter crimson */
+  --primary-foreground: 15 15 15;
+  
+  /* Secondary - Darker Peach for dark mode */
+  --secondary: 204 102 0; /* Darker peach */
+  --secondary-foreground: 250 250 250;
+  
+  /* Muted */
+  --muted: 39 39 42;
+  --muted-foreground: 161 161 170;
+  
+  /* Accent */
+  --accent: 68 26 50; /* Dark crimson accent */
+  --accent-foreground: 250 250 250;
+  
+  /* Destructive */
+  --destructive: 220 38 38;
+  --destructive-foreground: 250 250 250;
+  
+  /* Borders */
+  --border: 39 39 42;
+  --input: 39 39 42;
+  --ring: 241 120 146; /* Light crimson focus ring */
+  
+  /* Chart Colors for dark mode */
+  --chart-1: 241 120 146; /* Light Crimson */
+  --chart-2: 255 179 71; /* Light Orange */
+  --chart-3: 74 222 128; /* Light Green */
+  --chart-4: 96 165 250; /* Light Blue */
+  --chart-5: 196 181 253; /* Light Purple */
+  
+  /* Sidebar */
+  --sidebar: 24 24 27;
+  --sidebar-foreground: 250 250 250;
+  --sidebar-primary: 241 120 146;
+  --sidebar-primary-foreground: 15 15 15;
+  --sidebar-accent: 68 26 50;
+  --sidebar-accent-foreground: 250 250 250;
+  --sidebar-border: 39 39 42;
+  --sidebar-ring: 241 120 146;
+}
+
+@theme inline {
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --color-popover: rgb(var(--popover));
+  --color-popover-foreground: rgb(var(--popover-foreground));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-secondary: rgb(var(--secondary));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+  --color-destructive: rgb(var(--destructive));
+  --color-destructive-foreground: rgb(var(--destructive-foreground));
+  --color-border: rgb(var(--border));
+  --color-input: rgb(var(--input));
+  --color-ring: rgb(var(--ring));
+  --color-chart-1: rgb(var(--chart-1));
+  --color-chart-2: rgb(var(--chart-2));
+  --color-chart-3: rgb(var(--chart-3));
+  --color-chart-4: rgb(var(--chart-4));
+  --color-chart-5: rgb(var(--chart-5));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: rgb(var(--sidebar));
+  --color-sidebar-foreground: rgb(var(--sidebar-foreground));
+  --color-sidebar-primary: rgb(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: rgb(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: rgb(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: rgb(var(--sidebar-accent-foreground));
+  --color-sidebar-border: rgb(var(--sidebar-border));
+  --color-sidebar-ring: rgb(var(--sidebar-ring));
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  
+  /* Typography improvements */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-semibold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-4xl lg:text-5xl;
+  }
+  
+  h2 {
+    @apply text-3xl lg:text-4xl;
+  }
+  
+  h3 {
+    @apply text-2xl lg:text-3xl;
+  }
+  
+  h4 {
+    @apply text-xl lg:text-2xl;
+  }
+  
+  h5 {
+    @apply text-lg lg:text-xl;
+  }
+  
+  h6 {
+    @apply text-base lg:text-lg;
+  }
+}
+
+@layer components {
+  /* FleetFlow Brand Utilities */
+  .text-brand-crimson {
+    color: var(--brand-crimson);
+  }
+  
+  .text-brand-peach {
+    color: var(--brand-peach);
+  }
+  
+  .bg-brand-crimson {
+    background-color: var(--brand-crimson);
+  }
+  
+  .bg-brand-peach {
+    background-color: var(--brand-peach);
+  }
+  
+  .border-brand-crimson {
+    border-color: var(--brand-crimson);
+  }
+  
+  .border-brand-peach {
+    border-color: var(--brand-peach);
+  }
+  
+  /* Brand Gradients */
+  .bg-gradient-brand {
+    background: linear-gradient(135deg, var(--brand-crimson) 0%, var(--brand-peach) 100%);
+  }
+  
+  .bg-gradient-brand-reverse {
+    background: linear-gradient(135deg, var(--brand-peach) 0%, var(--brand-crimson) 100%);
+  }
+  
+  /* Glass Morphism Effect */
+  .glass {
+    @apply backdrop-blur-md bg-white/30 border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply backdrop-blur-md bg-black/30 border border-white/10;
+  }
+  
+  /* Button Variants */
+  .btn-brand {
+    @apply bg-brand-crimson hover:bg-brand-crimson-700 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 hover:shadow-brand-md;
+  }
+  
+  .btn-brand-outline {
+    @apply border-2 border-brand-crimson text-brand-crimson hover:bg-brand-crimson hover:text-white font-medium px-6 py-3 rounded-lg transition-all duration-200;
+  }
+  
+  .btn-brand-ghost {
+    @apply text-brand-crimson hover:bg-brand-peach/20 font-medium px-6 py-3 rounded-lg transition-all duration-200;
+  }
+  
+  /* Card Styles */
+  .card-brand {
+    @apply bg-white border border-brand-peach/30 rounded-xl shadow-sm hover:shadow-brand-md transition-all duration-200;
+  }
+  
+  .card-brand-gradient {
+    @apply bg-gradient-brand text-white rounded-xl shadow-lg hover:shadow-brand-xl transition-all duration-200;
+  }
+  
+  /* Focus States */
+  .focus-brand {
+    @apply focus:ring-2 focus:ring-brand-crimson/20 focus:border-brand-crimson;
+  }
+  
+  /* Animation Classes */
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slide-down 0.3s ease-out;
+  }
+  
+  .animate-pulse-brand {
+    animation: pulse-brand 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@layer utilities {
+  /* Scrollbar Styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand-crimson) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--brand-crimson);
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: var(--brand-crimson-700);
+  }
+}
