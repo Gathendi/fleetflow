@@ -30,4 +30,5 @@ next-env.d.ts
 CLAUDE.md
 DESIGN_SYSTEM.md
 DATABASE_SCHEMA.md
+API_DOCUMENTATION.md
 /lib/generated/prisma
