@@ -1,335 +1,269 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-@import '@fontsource/jost/400.css'; /* Regular */
-@import '@fontsource/jost/500.css'; /* Medium */
-@import '@fontsource/jost/600.css'; /* SemiBold */
-@import '@fontsource/jost/700.css'; /* Bold */
-@import '@fontsource/jost/300.css'; /* Light */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@custom-variant dark (&:is(.dark *));
+/* Import Jost font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* FleetFlow Brand Colors */
-  --brand-crimson: #A4193D;
-  --brand-peach: #FFDFB9;
-  --brand-crimson-50: #fef2f3;
-  --brand-crimson-100: #fde6e8;
-  --brand-crimson-200: #fbd0d6;
-  --brand-crimson-300: #f7aab6;
-  --brand-crimson-400: #f17892;
-  --brand-crimson-500: #e84d70;
-  --brand-crimson-600: #d73161;
-  --brand-crimson-700: #b52751;
-  --brand-crimson-800: #A4193D;
-  --brand-crimson-900: #7a1a32;
-  --brand-crimson-950: #440b18;
-  
-  --brand-peach-50: #fffefb;
-  --brand-peach-100: #fffcf5;
-  --brand-peach-200: #fff7e6;
-  --brand-peach-300: #FFDFB9;
-  --brand-peach-400: #ffc97a;
-  --brand-peach-500: #ffb347;
-  --brand-peach-600: #ff9a1f;
-  --brand-peach-700: #e67e00;
-  --brand-peach-800: #cc6600;
-  --brand-peach-900: #b35500;
-  --brand-peach-950: #7a3a00;
-
-  /* Base Colors */
-  --background: 255 255 255; /* White */
-  --foreground: 23 23 23; /* Almost black */
-  --card: 255 255 255;
-  --card-foreground: 23 23 23;
-  --popover: 255 255 255;
-  --popover-foreground: 23 23 23;
+  /* shadcn/ui CSS Variables with FleetFlow Brand Colors */
+  --background: 0 0% 100%;
+  --foreground: 224 71.4% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71.4% 4.1%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71.4% 4.1%;
   
   /* Primary - Crimson Red */
-  --primary: 164 25 61; /* #A4193D */
-  --primary-foreground: 255 255 255;
+  --primary: 347 85% 38%;
+  --primary-foreground: 0 0% 100%;
   
   /* Secondary - Peach */
-  --secondary: 255 223 185; /* #FFDFB9 */
-  --secondary-foreground: 164 25 61;
+  --secondary: 35 100% 85%;
+  --secondary-foreground: 347 85% 38%;
   
-  /* Muted */
-  --muted: 250 250 250;
-  --muted-foreground: 115 115 115;
+  --muted: 220 14.3% 95.9%;
+  --muted-foreground: 220 8.9% 46.1%;
   
-  /* Accent */
-  --accent: 255 247 230; /* Light peach */
-  --accent-foreground: 164 25 61;
+  --accent: 35 100% 95%;
+  --accent-foreground: 347 85% 38%;
   
-  /* Destructive */
-  --destructive: 239 68 68;
-  --destructive-foreground: 255 255 255;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
   
-  /* Borders */
-  --border: 229 229 229;
-  --input: 229 229 229;
-  --ring: 164 25 61; /* Crimson focus ring */
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 347 85% 38%;
   
-  /* Chart Colors */
-  --chart-1: 164 25 61; /* Crimson */
-  --chart-2: 255 223 185; /* Peach */
-  --chart-3: 34 197 94; /* Green */
-  --chart-4: 59 130 246; /* Blue */
-  --chart-5: 168 85 247; /* Purple */
+  --chart-1: 347 85% 38%;
+  --chart-2: 35 100% 85%;
+  --chart-3: 142 76% 36%;
+  --chart-4: 221 83% 53%;
+  --chart-5: 262 83% 58%;
   
-  /* Border Radius */
   --radius: 0.75rem;
-  
-  /* Sidebar */
-  --sidebar: 255 255 255;
-  --sidebar-foreground: 23 23 23;
-  --sidebar-primary: 164 25 61;
-  --sidebar-primary-foreground: 255 255 255;
-  --sidebar-accent: 255 247 230;
-  --sidebar-accent-foreground: 164 25 61;
-  --sidebar-border: 229 229 229;
-  --sidebar-ring: 164 25 61;
 }
 
 .dark {
-  /* Base Colors */
-  --background: 15 15 15; /* Dark background */
-  --foreground: 250 250 250; /* Light text */
-  --card: 24 24 27; /* Dark card */
-  --card-foreground: 250 250 250;
-  --popover: 24 24 27;
-  --popover-foreground: 250 250 250;
+  --background: 224 71.4% 4.1%;
+  --foreground: 0 0% 95%;
+  --card: 224 71.4% 4.1%;
+  --card-foreground: 0 0% 95%;
+  --popover: 224 71.4% 4.1%;
+  --popover-foreground: 0 0% 95%;
   
   /* Primary - Lighter Crimson for dark mode */
-  --primary: 241 120 146; /* Lighter crimson */
-  --primary-foreground: 15 15 15;
+  --primary: 347 85% 58%;
+  --primary-foreground: 224 71.4% 4.1%;
   
   /* Secondary - Darker Peach for dark mode */
-  --secondary: 204 102 0; /* Darker peach */
-  --secondary-foreground: 250 250 250;
+  --secondary: 35 100% 40%;
+  --secondary-foreground: 0 0% 95%;
   
-  /* Muted */
-  --muted: 39 39 42;
-  --muted-foreground: 161 161 170;
+  --muted: 215 27.9% 16.9%;
+  --muted-foreground: 217.9 10.6% 64.9%;
   
-  /* Accent */
-  --accent: 68 26 50; /* Dark crimson accent */
-  --accent-foreground: 250 250 250;
+  --accent: 347 85% 25%;
+  --accent-foreground: 0 0% 95%;
   
-  /* Destructive */
-  --destructive: 220 38 38;
-  --destructive-foreground: 250 250 250;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
   
-  /* Borders */
-  --border: 39 39 42;
-  --input: 39 39 42;
-  --ring: 241 120 146; /* Light crimson focus ring */
+  --border: 215 27.9% 16.9%;
+  --input: 215 27.9% 16.9%;
+  --ring: 347 85% 58%;
   
-  /* Chart Colors for dark mode */
-  --chart-1: 241 120 146; /* Light Crimson */
-  --chart-2: 255 179 71; /* Light Orange */
-  --chart-3: 74 222 128; /* Light Green */
-  --chart-4: 96 165 250; /* Light Blue */
-  --chart-5: 196 181 253; /* Light Purple */
-  
-  /* Sidebar */
-  --sidebar: 24 24 27;
-  --sidebar-foreground: 250 250 250;
-  --sidebar-primary: 241 120 146;
-  --sidebar-primary-foreground: 15 15 15;
-  --sidebar-accent: 68 26 50;
-  --sidebar-accent-foreground: 250 250 250;
-  --sidebar-border: 39 39 42;
-  --sidebar-ring: 241 120 146;
-}
-
-@theme inline {
-  --color-background: rgb(var(--background));
-  --color-foreground: rgb(var(--foreground));
-  --color-card: rgb(var(--card));
-  --color-card-foreground: rgb(var(--card-foreground));
-  --color-popover: rgb(var(--popover));
-  --color-popover-foreground: rgb(var(--popover-foreground));
-  --color-primary: rgb(var(--primary));
-  --color-primary-foreground: rgb(var(--primary-foreground));
-  --color-secondary: rgb(var(--secondary));
-  --color-secondary-foreground: rgb(var(--secondary-foreground));
-  --color-muted: rgb(var(--muted));
-  --color-muted-foreground: rgb(var(--muted-foreground));
-  --color-accent: rgb(var(--accent));
-  --color-accent-foreground: rgb(var(--accent-foreground));
-  --color-destructive: rgb(var(--destructive));
-  --color-destructive-foreground: rgb(var(--destructive-foreground));
-  --color-border: rgb(var(--border));
-  --color-input: rgb(var(--input));
-  --color-ring: rgb(var(--ring));
-  --color-chart-1: rgb(var(--chart-1));
-  --color-chart-2: rgb(var(--chart-2));
-  --color-chart-3: rgb(var(--chart-3));
-  --color-chart-4: rgb(var(--chart-4));
-  --color-chart-5: rgb(var(--chart-5));
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: rgb(var(--sidebar));
-  --color-sidebar-foreground: rgb(var(--sidebar-foreground));
-  --color-sidebar-primary: rgb(var(--sidebar-primary));
-  --color-sidebar-primary-foreground: rgb(var(--sidebar-primary-foreground));
-  --color-sidebar-accent: rgb(var(--sidebar-accent));
-  --color-sidebar-accent-foreground: rgb(var(--sidebar-accent-foreground));
-  --color-sidebar-border: rgb(var(--sidebar-border));
-  --color-sidebar-ring: rgb(var(--sidebar-ring));
+  --chart-1: 347 85% 58%;
+  --chart-2: 35 100% 70%;
+  --chart-3: 142 76% 56%;
+  --chart-4: 221 83% 73%;
+  --chart-5: 262 83% 78%;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground font-sans;
+    @apply border-border;
   }
   
-  /* Typography improvements */
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Jost', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Typography Scale following Design System */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-semibold tracking-tight;
+    font-family: 'Jost', system-ui, sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
   }
   
   h1 {
-    @apply text-4xl lg:text-5xl;
+    @apply text-5xl font-bold;
   }
   
   h2 {
-    @apply text-3xl lg:text-4xl;
+    @apply text-4xl font-semibold;
   }
   
   h3 {
-    @apply text-2xl lg:text-3xl;
+    @apply text-3xl font-semibold;
   }
   
   h4 {
-    @apply text-xl lg:text-2xl;
+    @apply text-2xl font-semibold;
   }
   
   h5 {
-    @apply text-lg lg:text-xl;
+    @apply text-xl font-medium;
   }
   
   h6 {
-    @apply text-base lg:text-lg;
+    @apply text-lg font-medium;
+  }
+
+  /* Responsive Typography */
+  @media (min-width: 1024px) {
+    h1 { @apply text-6xl; }
+    h2 { @apply text-5xl; }
+    h3 { @apply text-4xl; }
   }
 }
 
 @layer components {
-  /* FleetFlow Brand Utilities */
-  .text-brand-crimson {
-    color: var(--brand-crimson);
-  }
-  
-  .text-brand-peach {
-    color: var(--brand-peach);
-  }
-  
-  .bg-brand-crimson {
-    background-color: var(--brand-crimson);
-  }
-  
-  .bg-brand-peach {
-    background-color: var(--brand-peach);
-  }
-  
-  .border-brand-crimson {
-    border-color: var(--brand-crimson);
-  }
-  
-  .border-brand-peach {
-    border-color: var(--brand-peach);
-  }
-  
-  /* Brand Gradients */
-  .bg-gradient-brand {
-    background: linear-gradient(135deg, var(--brand-crimson) 0%, var(--brand-peach) 100%);
-  }
-  
-  .bg-gradient-brand-reverse {
-    background: linear-gradient(135deg, var(--brand-peach) 0%, var(--brand-crimson) 100%);
-  }
-  
-  /* Glass Morphism Effect */
-  .glass {
-    @apply backdrop-blur-md bg-white/30 border border-white/20;
-  }
-  
-  .glass-dark {
-    @apply backdrop-blur-md bg-black/30 border border-white/10;
-  }
-  
-  /* Button Variants */
+  /* FleetFlow Brand Button Components */
   .btn-brand {
-    @apply bg-brand-crimson hover:bg-brand-crimson-700 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 hover:shadow-brand-md;
+    @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+    @apply bg-crimson-800 text-white px-6 py-3 shadow-brand-sm hover:bg-crimson-700 hover:shadow-brand-md hover:-translate-y-0.5;
+  }
+  
+  .btn-brand-secondary {
+    @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+    @apply bg-peach-300 text-crimson-800 px-6 py-3 hover:bg-peach-400 hover:-translate-y-0.5;
   }
   
   .btn-brand-outline {
-    @apply border-2 border-brand-crimson text-brand-crimson hover:bg-brand-crimson hover:text-white font-medium px-6 py-3 rounded-lg transition-all duration-200;
+    @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+    @apply bg-transparent text-crimson-800 border-2 border-crimson-800 px-6 py-3 hover:bg-crimson-800 hover:text-white hover:-translate-y-0.5;
   }
-  
-  .btn-brand-ghost {
-    @apply text-brand-crimson hover:bg-brand-peach/20 font-medium px-6 py-3 rounded-lg transition-all duration-200;
-  }
-  
-  /* Card Styles */
+
+  /* FleetFlow Brand Card Components */
   .card-brand {
-    @apply bg-white border border-brand-peach/30 rounded-xl shadow-sm hover:shadow-brand-md transition-all duration-200;
+    @apply rounded-xl shadow-sm border border-peach-300/30 bg-white p-6 transition-all hover:shadow-brand-md hover:-translate-y-1;
   }
   
   .card-brand-gradient {
-    @apply bg-gradient-brand text-white rounded-xl shadow-lg hover:shadow-brand-xl transition-all duration-200;
+    @apply rounded-xl shadow-lg bg-gradient-brand text-white p-6 transition-all hover:shadow-brand-xl hover:-translate-y-1;
   }
   
+  .card-brand-subtle {
+    @apply rounded-xl shadow-sm bg-gradient-subtle border border-neutral-200 p-6 transition-all hover:shadow-brand-md hover:-translate-y-1;
+  }
+
+  /* FleetFlow Form Components */
+  .input-brand {
+    @apply flex h-10 w-full rounded-md border border-neutral-300 bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50;
+    @apply transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-800/20 focus-visible:border-crimson-800;
+  }
+
+  /* Glass Morphism Effects */
+  .glass {
+    @apply backdrop-blur-sm bg-white/30 border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply backdrop-blur-sm bg-black/30 border border-white/10;
+  }
+
+  /* Brand Gradient Backgrounds */
+  .bg-brand-gradient {
+    @apply bg-gradient-brand;
+  }
+  
+  .bg-brand-gradient-reverse {
+    @apply bg-gradient-brand-reverse;
+  }
+  
+  .bg-brand-gradient-subtle {
+    @apply bg-gradient-subtle;
+  }
+
   /* Focus States */
-  .focus-brand {
-    @apply focus:ring-2 focus:ring-brand-crimson/20 focus:border-brand-crimson;
-  }
-  
-  /* Animation Classes */
-  .animate-fade-in {
-    animation: fade-in 0.5s ease-out;
-  }
-  
-  .animate-slide-up {
-    animation: slide-up 0.3s ease-out;
-  }
-  
-  .animate-slide-down {
-    animation: slide-down 0.3s ease-out;
-  }
-  
-  .animate-pulse-brand {
-    animation: pulse-brand 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .focus-brand:focus {
+    @apply outline-none ring-2 ring-crimson-800/20 border-crimson-800;
   }
 }
 
 @layer utilities {
-  /* Scrollbar Styling */
-  .scrollbar-thin {
+  /* Custom Scrollbars */
+  .scrollbar-brand {
     scrollbar-width: thin;
-    scrollbar-color: var(--brand-crimson) transparent;
+    scrollbar-color: #A4193D transparent;
   }
   
-  .scrollbar-thin::-webkit-scrollbar {
+  .scrollbar-brand::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
   }
   
-  .scrollbar-thin::-webkit-scrollbar-track {
+  .scrollbar-brand::-webkit-scrollbar-track {
     background: transparent;
   }
   
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: var(--brand-crimson);
+  .scrollbar-brand::-webkit-scrollbar-thumb {
+    background-color: #A4193D;
     border-radius: 3px;
   }
   
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background-color: var(--brand-crimson-700);
+  .scrollbar-brand::-webkit-scrollbar-thumb:hover {
+    background-color: #b52751;
   }
+
+  /* Text Colors */
+  .text-brand-crimson {
+    @apply text-crimson-800;
+  }
+  
+  .text-brand-peach {
+    @apply text-peach-300;
+  }
+
+  /* Background Colors */
+  .bg-brand-crimson {
+    @apply bg-crimson-800;
+  }
+  
+  .bg-brand-peach {
+    @apply bg-peach-300;
+  }
+
+  /* Border Colors */
+  .border-brand-crimson {
+    @apply border-crimson-800;
+  }
+  
+  .border-brand-peach {
+    @apply border-peach-300;
+  }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+.animate-pulse-brand {
+  animation: pulse-brand 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

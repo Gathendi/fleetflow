@@ -28,4 +28,5 @@ next-env.d.ts
 
 # claude code
 CLAUDE.md
+DESIGN_SYSTEM.md
 /lib/generated/prisma
